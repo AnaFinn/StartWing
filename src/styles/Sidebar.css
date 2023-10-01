@@ -1,0 +1,55 @@
+.sidebar{
+    height: 100%; /* 100% Full-height */
+    width: 170px; /* 0 width - change this with JavaScript */
+    text-align: center;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: white; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    margin-top: 100px;
+    padding-top: 20px; /* Place content 60px from the top */
+    flex-direction: column;
+}
+.sidebar .profilePic{
+    background-color: #F5F9FC;
+    border-radius: 50%;
+    height: 90px;
+    width: auto;
+}
+.sidebar .mid{
+    height: 20%;
+    width: auto;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 10px 0;
+    text-align: left;
+    padding-left: 60px;    
+    padding-top: 10px;
+}
+.sidebar .top{
+    padding-left: 60px;
+}
+
+.sidebar a {
+    color: #707070;
+    text-decoration: none;
+  }
+
+.sidebar .bot{
+    justify-content: center;
+    height: 20%;
+    width: auto;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-left: 60px;    
+    padding-top: 250px;
+}
+
+.set-pic{
+    height:20%;
+    width: auto;
+}
