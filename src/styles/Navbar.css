@@ -36,9 +36,9 @@
   }
   
   .navbar .rightSide button {
-    background-color: transparent;
+    background-color: black;
     border: none;
-    color: white;
+    color: black;
     cursor: pointer;
   }
   

@@ -8,7 +8,11 @@ import '../styles/Sidebar.css';
 function Sidenavbar() {
   return (
     <div className = "sidebar">
-      <div className="top"><img className = "profilePic" src = {ProfilePic}/></div>
+      <div className="top">
+        <img className = "profilePic" src = {ProfilePic}/>
+        <h3>Ana Karp</h3>
+      </div>
+      
       <div className="mid">
         <Link to="/"> Dashboard </Link>
         <Link to="/browse"> Browse </Link>

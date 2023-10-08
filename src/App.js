@@ -3,7 +3,9 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Sidenavbar from './components/Sidenavbar';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
+import Browse from './pages/Browse';
+import Communication from './pages/Communication';
 
 function App() {
   return (
@@ -12,7 +14,9 @@ function App() {
         <Navbar/>
         <Sidenavbar/>
         <Routes>
-          <Route path='/' element={<Home/>} />
+          <Route path='/' element={<Dashboard/>} />
+          <Route path='/browse' element={<Browse/>} />
+          <Route path='/browse' element={<Communication/>} />
         </Routes>
       </Router>
     </div>
