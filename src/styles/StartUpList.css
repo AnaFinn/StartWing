@@ -1,0 +1,10 @@
+.start-ap__list {
+    list-style: none;
+    margin: 0 17rem ;
+    padding: 0;
+    width: 100%;
+    max-width: 70rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }

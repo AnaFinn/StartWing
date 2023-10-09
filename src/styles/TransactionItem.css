@@ -1,8 +1,9 @@
 .trans-table__container{
-    padding: 20rem;
+    
+    margin-left:240px;
     border-radius: 6px;
     border-radius: 5px;
     border-color: black;
     height: 100%;
-    width: 70rem;
+    width: 50%;
 }

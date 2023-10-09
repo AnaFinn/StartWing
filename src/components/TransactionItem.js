@@ -15,7 +15,7 @@ const TransactionItem = (props) => {
     <div className="trans-table__container">
       <Paper elevation={6}>
         <TableContainer>
-          <Table sx={{ minWidth: 750}} size="small" aria-label="a dense table">
+          <Table size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
                 <TableCell>Id</TableCell>

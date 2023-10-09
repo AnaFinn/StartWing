@@ -46,7 +46,7 @@
     flex-direction: row;
     justify-content: space-evenly;
     padding-left: 60px;    
-    padding-top: 250px;
+    padding-top: 100%;
 }
 
 .set-pic{

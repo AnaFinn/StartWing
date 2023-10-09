@@ -15,7 +15,7 @@ function Navbar() {
             <Link to="/menu"> Terms and services </Link>
             <Link to="/about"> Guied </Link>
             <button>
-              <img src={Hamburger}/>
+              {/* <img src={Hamburger}/> */}
             </button>
         </div>
     </div>
