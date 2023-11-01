@@ -1,9 +1,13 @@
 .trans-table__container{
-    
-    margin-left:240px;
+    margin-left: 270px;
     border-radius: 6px;
     border-radius: 5px;
     border-color: black;
     height: 100%;
-    width: 50%;
+    margin-right: 20px;
+    
 }
+
+@media screen and (max-width: 900px) {
+    .trans-table__container {margin-left: 30px; width: calc(100% - 3rem);}
+   }

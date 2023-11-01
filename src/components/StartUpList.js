@@ -6,8 +6,13 @@ import StartUpItem from './StartUpItem';
 import '../styles/StartUpList.css'
 
 const StartUpList = props => {
+  let startUpClassName = 'start-up__list'
+  if (props.items.length === 1) {
+    startUpClassName = 'start-up__single';
+  }
+
   return (
-    <ul className='start-ap__list'>
+    <ul className={startUpClassName}>
         {props.items.map((startUp)=>{
             return(
                 <StartUpItem key={startUp.id}
