@@ -16,21 +16,23 @@ import {
   ListItemButton,
   ListItemIcon,
   Avatar,
+  CircularProgress
 } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import { TabPanel, TabList, TabContext } from "@mui/lab";
+import ChatLoading from "../UIElements/ChatLoading";
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
+  const [thisSeacrhResult, setThisSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
   const [open, setOpen] = useState(false);
 
   const {
     setSelectedChat,
-    user,
+    searchResult,
     notification,
     setNotification,
     chats,
@@ -56,33 +58,38 @@ const SideDrawer = () => {
   const handleSearch = async () => {
     try {
       setLoading(true);
-
+      const user = JSON.parse(localStorage.getItem("userInfo"));
+      console.log({ user });
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${
+            searchResult?.token ||
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDA4NmM0MTlhMjU2OWY0OTliYzAyYiIsImlhdCI6MTY5ODcyNzY3MSwiZXhwIjoxNzAxMzE5NjcxfQ.phNsAIxBqPWWoatX7wErhS-mhxyJd1pKEhGJbVJKRB4"
+          } `,
         },
       };
 
       const { data } = await axios.get(`/api/user?search=${search}`, config);
-      console.log(searchResult);
+      console.log(data);
       setLoading(false);
-      setSearchResult(data);
-      console.log(searchResult);
+      setThisSearchResult(data);
+      console.log(thisSeacrhResult);
     } catch (error) {
-      console.log("Set chat error" + error.message);
+      console.log(error.message);
     }
-
   };
 
   const accessChat = async (userId) => {
     console.log(userId);
-
     try {
       setLoadingChat(true);
       const config = {
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${
+            searchResult?.token ||
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDA4NmM0MTlhMjU2OWY0OTliYzAyYiIsImlhdCI6MTY5ODcyNzY3MSwiZXhwIjoxNzAxMzE5NjcxfQ.phNsAIxBqPWWoatX7wErhS-mhxyJd1pKEhGJbVJKRB4"
+          }`,
         },
       };
       const { data } = await axios.post(
@@ -94,14 +101,17 @@ const SideDrawer = () => {
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
       setLoadingChat(false);
-      //onClose();
+      setOpen(false);
+      console.log(data);
+      console.log(chats);
     } catch (error) {
+      setOpen(false);
       console.log(error.message);
     }
   };
   return (
     <div>
-      <Box sx={{ margin: "2rem" }}>
+      <Box >
         <Tooltip title="Search chat">
           <Button size="small" variant="ghost" onClick={toggleDrawer(true)}>
             <SearchIcon fontSize="large" />
@@ -116,40 +126,43 @@ const SideDrawer = () => {
         <Drawer open={open} onClose={toggleDrawer(true)}>
           <Box
             role="presentation"
-            // onClick={toggleDrawer(false)}
+            //onClick={toggleDrawer(false)}
             // onKeyDown={toggleDrawer(false)}
           >
-            <Box d="flex" pb={2}>
-            <TextField
-              size="small"
-              id="outlined-basic"
-              label="Search User"
-              variant="outlined"
-              placeholder="Search by name or email"
-              mr={2}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            ></TextField>
+            <Box sx={{d:"flex", paddingTop:6}}>
+              <TextField
+                size="small"
+                id="outlined-basic"
+                label="Search User"
+                variant="outlined"
+                placeholder="Search by name or email"
+                mr={2}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              ></TextField>
               <Button onClick={handleSearch}>Go</Button>
             </Box>
             {loading ? (
-              "<ChatLoading />"
+              <ChatLoading />
             ) : (
-              searchResult?.map((user) => (
-                
+              thisSeacrhResult.map((searchResult) => (
                 <UserListItem
-                  key={user._id}
-                  user={user}
-                  handleFunction={() => accessChat(user._id)}
+                  key={searchResult._id}
+                  searchResult={searchResult}
+                  handleFunction={() => accessChat(searchResult._id)}
                 />
               ))
             )}
-            {loadingChat 
-            // && <Spinner ml="auto" d="flex" />
-            }
+            {loadingChat && (
+              <Box
+                sx={{ display: "flex", height: 250, justifyContent: "center" }}
+              >
+                <CircularProgress />
+              </Box>
+            )}
           </Box>
         </Drawer>
-        <TabContext value={value}>
+        {/* <TabContext value={value}>
           <Box
             sx={{
               borderBottom: 1,
@@ -163,9 +176,8 @@ const SideDrawer = () => {
               <Tab sx={{ width: "50%" }} label="Files" value="2" />
             </TabList>
           </Box>
-          <TabPanel value="1">Chats</TabPanel>
-          <TabPanel value="2">Files</TabPanel>
-        </TabContext>
+
+        </TabContext> */}
       </Box>
     </div>
   );

@@ -1,9 +1,10 @@
 import { Avatar, Box } from "@mui/material"
 import { ChatState } from "../../Context/ChatProvider";
 
-const UserListItem = ({ handleFunction }) => {
-  const { user } = ChatState();
-  console.log("user list " + user._id)
+const UserListItem = ({ searchResult, handleFunction }) => {
+ 
+ // const { searchResult } = ChatState();
+  console.log(searchResult);
   return (
     <Box
       onClick={handleFunction}
@@ -26,14 +27,14 @@ const UserListItem = ({ handleFunction }) => {
         mr={2}
         size="sm"
         cursor="pointer"
-        name={user.name}
-        src={user.pic}
+        name={searchResult.name}
+        src={searchResult.pic}
       />
       <Box>
-        <h4>{user.name}</h4>
+        <h4>{searchResult.name}</h4>
         <p>
           <b>Email : </b>
-          {user.email}
+          {searchResult.email}
         </p>
       </Box>
     </Box>

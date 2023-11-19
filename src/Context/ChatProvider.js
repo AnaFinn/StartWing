@@ -3,14 +3,23 @@ import { useNavigate } from "react-router-dom";
 const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [searchResult, setSearchResult] = useState();
   const [selectedChat, setSelectedChat] = useState();
   const [chats, setChats] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    setUser(userInfo);
+   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  
+//    const userInfo = {
+//     "_id": "6540869619a2569f499bc028",
+//     "name": "sem ru",
+//     "email": "sem@exp.com",
+//     "password": "$2a$10$jNxY2NXkOCuQPa/nIVXIA.qKcJZDYfvAHRlrKpvSRfIOIxs3M80H2",
+//     "pic": "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+//     "__v": 0
+// }
+    setSearchResult(userInfo);
 
     if (!userInfo) {
         navigate("/home");
@@ -18,9 +27,8 @@ const ChatProvider = ({ children }) => {
   }, [navigate]
   );
 
-  console.log({user});
   return (
-    <ChatContext.Provider value={{ user, setUser, selectedChat, setSelectedChat, chats, setChats }}>
+    <ChatContext.Provider value={{ searchResult, setSearchResult, selectedChat, setSelectedChat, chats, setChats }}>
       {children}
     </ChatContext.Provider>
   );
