@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import ScrollableFeed from "react-scrollable-feed";
+import { Link } from "react-router-dom";
+import BackIcon from "../../assets/back_arr.png"
 import { useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
-import { Alert, Typography } from "@mui/material";
+import { Alert, Typography, Divider } from "@mui/material";
 import { getSender } from "../../config/ChatLogics";
 import { Box, Button, Stack } from "@mui/material";
 import { useTheme } from "@mui/system";
+import SideDrawer from "./SideDrawer";
 
 import axios from "axios";
 import GroupChatModal from "../UIElements/GroupChatModal";
@@ -47,7 +50,6 @@ const MyChats = ({ fetchAgain }) => {
   }, [fetchAgain]);
 
   return (
-    
     <Box
       display={{ xs: selectedChat ? "none" : "flex", md: "flex" }}
       flexDirection="column"
@@ -59,6 +61,7 @@ const MyChats = ({ fetchAgain }) => {
       borderWidth={1}
       borderColor={theme.palette.divider}
       margin={0}
+      backgroundColor={"#E9F3FA"}
     >
       <Box
         sx={{
@@ -72,7 +75,20 @@ const MyChats = ({ fetchAgain }) => {
           alignItems: "center",
         }}
       >
-        My Chats
+        <Link to={`/browse`}>
+          <img style={{width:"30px"}} className="back-icon" src={BackIcon} />
+        </Link>
+
+        {searchResult && <SideDrawer />}
+        <Typography
+          variant="h4"
+          sx={{
+            fontSize: "1.8rem",
+            color: "#005892",
+          }}
+        >
+          My Chats
+        </Typography>
         <GroupChatModal>
           <Button
             d="flex"
@@ -87,12 +103,18 @@ const MyChats = ({ fetchAgain }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          padding: 3,
-          backgroundColor: "#F8F8F8",
+          padding: 2,
+          backgroundColor: "#E9F3FA",
           width: "100%",
           //height:"30rem",
-          borderRadius: "lg",
-          overflow: 'auto',
+          borderRadius: "10px",
+          borderWidth: "2px",
+          borderColor: "black",
+          overflow: "auto",
+          scrollbarWidth: "none",
+          "&::-webkit-scrollbar": {
+            display: "none", // For WebKit (Chrome, Safari, etc.)
+          },
         }}
       >
         {chats ? (
@@ -101,25 +123,30 @@ const MyChats = ({ fetchAgain }) => {
               <Box
                 onClick={() => setSelectedChat(chat)}
                 sx={{
-                 
                   cursor: "pointer",
                   backgroundColor:
-                    selectedChat === chat ? "#005892" : "#E8E8E8",
-                  color: selectedChat === chat ? "white" : "#005892",
+                    selectedChat === chat ? "#CBDCFD" : "#E8E8E8",
+                  color: selectedChat === chat ? "#005892" : "gray",
                   paddingX: 3,
                   paddingY: 2,
-                  borderRadius: "15px",
-                  marginY:"2px"
+                  borderRadius: "10px",
+                  marginY: "2px",
                 }}
                 key={chat._id}
               >
-                <Typography sx={{ fontWeight: '', fontSize: '1.1rem' }}>
+                <Typography sx={{ fontWeight: "", fontSize: "1.1rem" }}>
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </Typography>
                 {chat.latestMessage && (
-                  <Typography sx={{ marginTop: '6px', fontSize: '0.9rem', color:"#C37C15" }}>
+                  <Typography
+                    sx={{
+                      marginTop: "6px",
+                      fontSize: "0.9rem",
+                      //color: "gray",
+                    }}
+                  >
                     <>{chat.latestMessage.sender.name}: </>
                     {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."

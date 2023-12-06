@@ -7,15 +7,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Typography } from "@mui/material";
 
 import "../styles/TransactionItem.css";
 
 const TransactionItem = (props) => {
   return (
     <div className="trans-table__container">
+       <Typography variant="h6" my="1rem" color={"#055E99"}>
+           Operational vs Non-operational expenses
+          </Typography>
       <Paper elevation={6}>
         <TableContainer>
-          <Table size="small" aria-label="a dense table">
+          <Table size="large" aria-label="a dense table">
             <TableHead>
               <TableRow>
                 <TableCell>Id</TableCell>
@@ -34,12 +38,12 @@ const TransactionItem = (props) => {
                   key={transaction.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell style={{opacity:"0"}} component="th" scope="row">
                     {transaction.id}
                   </TableCell>
                   <TableCell align="right">{transaction.date}</TableCell>
                   <TableCell align="right">{transaction.amount}</TableCell>
-                  <TableCell align="right">{transaction.status}</TableCell>
+                  <TableCell align="right" style={{color:"#62B587"}} >{transaction.status}</TableCell>
                   <TableCell align="right">{transaction.user}</TableCell>
                   <TableCell align="right">
                     {transaction.contact_name}

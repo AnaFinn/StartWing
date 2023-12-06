@@ -1,5 +1,12 @@
-import React from "react";
+import { Box, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { KpiState } from "../../Context/KpiPropvider";
+import axios from "axios";
 import {
+  Cell,
+  Bar,
+  BarChart,
   LineChart,
   Line,
   XAxis,
@@ -8,80 +15,144 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  AreaChart,
+  Area,
+  PieChart,
+  Pie,
+  Sector,
 } from "recharts";
 
-const StackedBarChart = () => {
-  const data = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+const StackedBarChart = ({ fetchAgain }) => {
+  const [loggedUser, setLoggedUser] = useState();
+  const {
+    user,
+    setUser,
+    kpi,
+    setKpi,
+    revenue,
+    setRevenue,
+    expenses,
+    setExpenses,
+  } = KpiState();
+  //console.log(user);
+
+  const returnNumber = (str) => {
+    return parseInt(str.replace(/\D/g, ""));
+  };
+
+  const fetchKpis = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${
+            user?.token ||
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDA4NmM0MTlhMjU2OWY0OTliYzAyYiIsImlhdCI6MTY5ODcyNzY3MSwiZXhwIjoxNzAxMzE5NjcxfQ.phNsAIxBqPWWoatX7wErhS-mhxyJd1pKEhGJbVJKRB4"
+          } `,
+        },
+      };
+      const { data } = await axios.get("/api/kpis", config);
+      console.log("API Response:", data);
+      setKpi(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    fetchKpis();
+  }, []);
+
   return (
-    <ResponsiveContainer>
-      <LineChart
-        width={500}
-        height={300}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="pv"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-      </LineChart>
-    </ResponsiveContainer>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        width: "auto",
+        height: "48vh",
+        "@media (max-width: 900px)": {
+          flexDirection: "column",
+        },
+      }}
+    >
+      {kpi ? (
+        <Box sx={{}}>
+          <Typography variant="h6" my="1rem" ml="4rem" color={"#055E99"}>
+            Revenue and expenses
+          </Typography>
+          {kpi.map((kpis) => (
+            <AreaChart width={500} height={300} data={kpis.monthlyData}>
+              <defs>
+                <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#C37C15" stopOpacity={0.5} />
+                  <stop offset="95%" stopColor="#C37C15" stopOpacity={0.4} />
+                </linearGradient>
+                <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#C37C15" stopOpacity={0.5} />
+                  <stop offset="95%" stopColor="#C37C15" stopOpacity={0.4} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="0 0" />
+              <XAxis dataKey="month" tick="" tickLine={false} />
+              <YAxis
+                tickLine={false}
+                axisLine={{ strokeWidth: "0" }}
+                style={{ fontSize: "10px" }}
+                domain={[8000, 23000]}
+              />
+
+              <Tooltip />
+              <Area
+                type="monotone"
+                dataKey="revenue"
+                dot={true}
+                activeDot={{ r: 5 }}
+                stroke="#C37C15"
+                fill="url(#colorRevenue)"
+              />
+              <Area
+                type="monotone"
+                dataKey="expenses"
+                dot={true}
+                fill="url(#colorRevenue)"
+                stroke="#C37C15"
+              />
+            </AreaChart>
+          ))}
+        </Box>
+      ) : (
+        <>loading...</>
+      )}
+      {kpi ? (
+        <Box>
+          <Typography variant="h6" my="1rem" ml="4rem" color={"#055E99"}>
+           Operational vs Non-operational expenses
+          </Typography>
+          {kpi.map((k) => (
+            <BarChart width={500} height={300} data={k.monthlyData}>
+              <CartesianGrid strokeDasharray="0 0" />
+              <XAxis dataKey="month" tick="" tickLine={false} />
+              <YAxis
+                tickLine={false}
+                axisLine={{ strokeWidth: "0" }}
+                style={{ fontSize: "10px" }}
+                domain={[7000, 18000]}
+              />
+              <Tooltip />
+
+              <Bar dataKey="operationalExpenses" stackId="a" fill="#055E99" />
+              <Bar
+                dataKey="nonOperationalExpenses"
+                stackId="a"
+                fill="url(#colorRevenue)"
+              />
+            </BarChart>
+          ))}
+        </Box>
+      ) : (
+        <>loading...</>
+      )}
+    </Box>
   );
 };
 

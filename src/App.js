@@ -9,26 +9,29 @@ import StartUp from "./pages/StartUp";
 import Home from "./pages/Home";
 import ShowNavBars from "./components/ShowNavBars";
 import ChatProvider from "./Context/ChatProvider";
+import KpiProvider from "./Context/KpiPropvider";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <ChatProvider>
-        <main>
-          <Navbar />
-          <ShowNavBars>
-            <Sidenavbar />
-          </ShowNavBars>
-          <Routes>
-            <Route path="/home" element={<Home />} />
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/browse" element={<Browse />} />
-            <Route path="/communication" element={<Communication />} />
-            <Route path="/:startUpId/startUp" element={<StartUp />} />
-          </Routes>
-        </main>
-        </ChatProvider>
+        <KpiProvider>
+          <ChatProvider>
+            <main>
+              <Navbar />
+              <ShowNavBars>
+                <Sidenavbar />
+              </ShowNavBars>
+              <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/browse" element={<Browse />} />
+                <Route path="/communication" element={<Communication />} />
+                <Route path="/:startUpId/startUp" element={<StartUp />} />
+              </Routes>
+            </main>
+          </ChatProvider>
+        </KpiProvider>
       </BrowserRouter>
     </div>
   );

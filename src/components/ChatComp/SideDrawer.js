@@ -113,7 +113,7 @@ const SideDrawer = () => {
     <div>
       <Box >
         <Tooltip title="Search chat">
-          <Button size="small" variant="ghost" onClick={toggleDrawer(true)}>
+          <Button size="small" variant="ghost" onClick={toggleDrawer(true)} >
             <SearchIcon fontSize="large" />
             {/* <TextField
               size="small"

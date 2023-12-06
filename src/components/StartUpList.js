@@ -2,7 +2,7 @@ import React from 'react';
 
 import CardStartUp from './UIElements/CardStartUp';
 import StartUpItem from './StartUpItem';
-
+//import { ChatState } from '../Context/ChatProvider';
 import '../styles/StartUpList.css'
 
 const StartUpList = props => {

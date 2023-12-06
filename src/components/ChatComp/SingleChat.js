@@ -166,12 +166,13 @@ const SingleChat = () => {
               display: "flex",
               justifyContent: { base: "space-between" },
               alignItems: "center",
+              color:"#005892"
             }}
           >
             <IconButton
               sx={{
                 display: { base: "flex", md: "none" },
-                backgroundColor: "black",
+                //backgroundColor: "black",
               }}
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
@@ -201,22 +202,22 @@ const SingleChat = () => {
               flexDirection: "column",
               justifyContent: "flex-end",
               // padding: 3,
-              backgroundColor: "#E8E8E8",
+              backgroundColor: "#E8F2FA",
               width: "100%",
-              height: "65vh",
+              height: "74vh",
               borderRadius: "12px",
               overflowY: "hidden",
             }}
           >
             {loading ? (
               <Box
-                sx={{ display: "flex", height: 250, justifyContent: "center" }}
+                sx={{ display: "flex", height: "auto", justifyContent: "center" }}
               >
                 <CircularProgress />
               </Box>
             ) : (
               <Box
-                sx={{ display: "flex-end", heigh: "400px", overflowY: "auto" }}
+                sx={{ display: "flex-end", heigh: "100%", overflowY: "auto" }}
                 className="messages"
               >
                 <ScrollableChat messages={messages} />
@@ -226,7 +227,7 @@ const SingleChat = () => {
               onKeyDown={sendMessage}
               id="first-name"
               isRequired
-              marginTop={3}
+              //marginTop={3}
             >
               {istyping ? (
                 <div>
@@ -243,9 +244,9 @@ const SingleChat = () => {
               <Input
                 variant="filled"
                 sx={{
-                  backgroundColor: "#E0E0E0",
+                  backgroundColor: "white",
                   height: "50px",
-                  padding: "1rem",
+                  //padding: "0.8rem",
                   //position:"fixed"
                 }}
                 placeholder="Enter a message.."

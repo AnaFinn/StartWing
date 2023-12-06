@@ -13,7 +13,7 @@
   }
   
   .sidebar a {
-    padding: 6px 8px 6px 30px;
+    padding: 0px 8px 6px 30px;
     margin-top: 0.5rem;
     text-align: left;
     text-decoration: none;
@@ -24,14 +24,13 @@
   
   .sidebar a:hover,
   .sidebar a:active {
-    color: #FFD08C;
+    color: #055E99;
   }
   
   .sidebar .profilePic {
     background-color: #F5F9FC;
     border-radius: 50%;
-    height: 60px;
-    width: auto;
+    width:30%;
   }
   
   .sidebar .bot {

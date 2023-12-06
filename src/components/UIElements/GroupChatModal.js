@@ -155,9 +155,9 @@ const GroupChatModal = ({ children }) => {
               <Button onClick={handleSubmit} sx={{ mt: 2 }}>
                 Create
               </Button>
-              <Button onClick={handleSubmit} sx={{ mt: 2, color: "red" }}>
+              {/* <Button onClick={handleSubmit} sx={{ mt: 2, color: "red" }}>
                 Cancel
-              </Button>
+              </Button> */}
             </Box>
           </Stack>
         </Box>
